@@ -20,6 +20,7 @@ require_once('Zend/Clickatell/Actions/Coverage.php');
 require_once('Zend/Clickatell/Actions/Balance.php');
 
 
+
 /**
 * @package Clickatell
 */

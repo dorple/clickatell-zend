@@ -4,10 +4,10 @@
 */
 require_once('Zend/Clickatell/Action.php');
 
+
 /**
 * @package Clickatell
 */
-
 class Sms extends Action {
 
 	/**

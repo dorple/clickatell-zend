@@ -8,6 +8,7 @@ require_once('Zend/Clickatell/Request.php');
 */
 require_once('Zend/Clickatell/Exception/TransportException.php');
 
+
 /**
 * @package Clickatell
 */

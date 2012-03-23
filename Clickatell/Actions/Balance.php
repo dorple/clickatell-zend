@@ -4,6 +4,7 @@
 */
 require_once('Zend/Clickatell/Action.php');
 
+
 /**
 * @package Clickatell
 */
