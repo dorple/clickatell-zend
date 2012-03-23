@@ -36,7 +36,7 @@ class Clicaktell_Request extends Zend_Http_Client {
 		if ($packet) {
 			$uriConstruct .= $packet;
 		}
-		
+
 		parent::__construct($uriConstruct);
 
 		$this->request();
