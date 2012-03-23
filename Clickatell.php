@@ -47,27 +47,30 @@ class Clickatell {
 
 
 	/**
+	* Set transport to be used globally
+	* @var int
+	*/
+	public static $useTransport = 1;
+
+	/**
 	* @param int $apiId
 	* @param string $apiUser
 	* @param string $apiUser
 	*/
-	public function __construct($apiId, $apiUser, $apiPass) {
+	public function __construct($apiId, $apiUser, $apiPass, $transport = self::TRANSPORT_SMS) {
+
+		if (!$this->validateTransport($transport)) {
+			throw new Exception(__CLASS__.': invalid transport defined');
+			die();
+		}
 
 		$this->credentials['api_id'] =$apiId;
 		$this->credentials['user'] =$apiUser;
 		$this->credentials['password'] =$apiPass;
-
+		self::$useTransport = $transport;
 
 		$balance = new Balance($this->credentials);
-
-		if ($balance->get() > 0) 
-		{
-			$this->gotCredits = true;
-		}
-		else 
-		{
-			$this->gotCredits = false;	
-		}
+		$this->gotCredits = $balance->hasCredits();
 
 	}	
 
@@ -76,12 +79,12 @@ class Clickatell {
 	* @param string $message
 	* @return string
 	*/
-	public function sendMsg($to, $message, $transport = self::TRANSPORT_SMS) {
+	public function sendMsg($to, $message) {
 
 		$this->gotCredits = true;
 		if ($this->gotCredits) {
 
-			$sms = new Sms($this->credentials, $transport);
+			$sms = new Sms($this->credentials);
 			$sms->to = $to;
 			$sms->message = $message;
 
@@ -117,7 +120,19 @@ class Clickatell {
 	}
 	
 
+	public function validateTransport($transport) {
 
+		switch($transport) {
+			case self::TRANSPORT_SMS:
+			case self::TRANSPORT_EMAIL:
+			case self::TRANSPORT_XML:
+				return true;
+				break;
+			default:
+				return false;
+		}
+
+	}
 }
 
 

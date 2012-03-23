@@ -34,11 +34,10 @@ class Clicaktell_Request extends Zend_Http_Client {
 		$uriConstruct = self::URI_API.$uri;
 
 		if ($packet) {
-			$uriConstruct .= $this->genQueryString($packet);
+			$uriConstruct .= $packet;
 		}
-
+		
 		parent::__construct($uriConstruct);
-
 
 		$this->request();
 
@@ -59,23 +58,7 @@ class Clicaktell_Request extends Zend_Http_Client {
 		return $this->body;
 	}
 
-	/**
-	* @param array $credentials
-	* @param array $extra
-	* @return string
-	*/
-	private function genQueryString($packet) {
-
-		$string = "?";
-
-		if (!empty($packet)) {
-			foreach($packet as $k => $v) {
-				$string .= "&".$k."=".$v;
-			}
-		}
-
-		return $string;
-	}
+	
 
 
 }
