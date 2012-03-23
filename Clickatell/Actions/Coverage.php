@@ -10,12 +10,6 @@ require_once('Zend/Clickatell/Action.php');
 */
 class Coverage extends Action {
 
-	/**
-	* Define Action Namespace
-	* @var array
-	*/
-	public $nameSpace = array(Clickatell::TRANSPORT_SMS => 'utils/routeCoverage.php',
-							   Clickatell::TRANSPORT_XML => 'routeCoverage');
 
 	/**
 	* @param string $number
@@ -26,7 +20,7 @@ class Coverage extends Action {
 		//set extra
 		$extra['msisdn'] = $number;
 
-		return $this->doRequest($this->nameSpace, $extra);
+		return $this->doRequest('utils/routeCoverage.php', $extra);
 		
 	}
 

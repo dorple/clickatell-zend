@@ -10,12 +10,7 @@ require_once('Zend/Clickatell/Action.php');
 */
 class Balance extends Action {
 
-	/**
-	* Define Action Namespace
-	* @var array
-	*/
-	public $nameSpace = array(Clickatell::TRANSPORT_SMS => 'http/getbalance',
-							   Clickatell::TRANSPORT_XML => 'getBalance');
+	
 
 
 	/**
@@ -23,13 +18,13 @@ class Balance extends Action {
 	*/
 	public function getCredits() {
 
-		return $this->doRequest($this->nameSpace);
+		return $this->doRequest("http/getbalance");
 		
 	}
 
 	public function hasCredits() {
 
-		$response = $this->doRequest($this->nameSpace);
+		$response = $this->doRequest("http/getbalance");
 
 		if ($response > 0) {
 			return true;

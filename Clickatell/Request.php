@@ -11,7 +11,7 @@ require_once('Zend/Clickatell/Exception/RequestException.php');
 /**
 * @package Clickatell
 */
-class Clicaktell_Request extends Zend_Http_Client {
+class Clickatell_Request extends Zend_Http_Client {
 	
 	/**
 	* API location
@@ -26,8 +26,7 @@ class Clicaktell_Request extends Zend_Http_Client {
 
 	/**
 	* @param string $uri
-	* @param array $credentials
-	* @param array $extra
+	* @param array $packet
 	*/
 	public function __construct($uri, $packet) {
 

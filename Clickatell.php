@@ -26,12 +26,7 @@ require_once('Zend/Clickatell/Actions/Balance.php');
 */
 class Clickatell {
 
-	/**
-	* Transport Constants
-	* @const int
-	*/
-	const TRANSPORT_SMS = 1;
-	const TRANSPORT_EMAIL = 2;
+
 	const TRANSPORT_XML = 3;
 
 	/**
@@ -48,27 +43,15 @@ class Clickatell {
 
 
 	/**
-	* Set transport to be used globally
-	* @var int
-	*/
-	public static $useTransport = 1;
-
-	/**
 	* @param int $apiId
 	* @param string $apiUser
 	* @param string $apiUser
 	*/
-	public function __construct($apiId, $apiUser, $apiPass, $transport = self::TRANSPORT_SMS) {
-
-		if (!$this->validateTransport($transport)) {
-			throw new Exception(__CLASS__.': invalid transport defined');
-			die();
-		}
+	public function __construct($apiId, $apiUser, $apiPass) {
 
 		$this->credentials['api_id'] =$apiId;
 		$this->credentials['user'] =$apiUser;
 		$this->credentials['password'] =$apiPass;
-		self::$useTransport = $transport;
 
 		$balance = new Balance($this->credentials);
 		$this->gotCredits = $balance->hasCredits();
@@ -117,21 +100,6 @@ class Clickatell {
 
 		$coverage = new Coverage($this->credentials);
 		return $coverage->checkCoverage($to);
-
-	}
-	
-
-	public function validateTransport($transport) {
-
-		switch($transport) {
-			case self::TRANSPORT_SMS:
-			case self::TRANSPORT_EMAIL:
-			case self::TRANSPORT_XML:
-				return true;
-				break;
-			default:
-				return false;
-		}
 
 	}
 }
