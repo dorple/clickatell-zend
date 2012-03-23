@@ -26,6 +26,14 @@ require_once('Zend/Clickatell/Actions/Balance.php');
 class Clickatell {
 
 	/**
+	* Transport Constants
+	* @const int
+	*/
+	const TRANSPORT_SMS = 1;
+	const TRANSPORT_EMAIL = 2;
+	const TRANSPORT_XML = 3;
+
+	/**
 	* Credentials array for api requests
 	* @var array
 	*/
@@ -45,9 +53,9 @@ class Clickatell {
 	*/
 	public function __construct($apiId, $apiUser, $apiPass) {
 
-		$this->credentials['apiId'] =$apiId;
-		$this->credentials['apiUser'] =$apiUser;
-		$this->credentials['apiPass'] =$apiPass;
+		$this->credentials['api_id'] =$apiId;
+		$this->credentials['user'] =$apiUser;
+		$this->credentials['password'] =$apiPass;
 
 
 		$balance = new Balance($this->credentials);
@@ -68,11 +76,12 @@ class Clickatell {
 	* @param string $message
 	* @return string
 	*/
-	public function sendMsg($to, $message) {
+	public function sendMsg($to, $message, $transport = self::TRANSPORT_SMS) {
 
-		if ($this->gotCredits() > 0) {
+		$this->gotCredits = true;
+		if ($this->gotCredits) {
 
-			$sms = new Sms($this->credentials);
+			$sms = new Sms($this->credentials, $transport);
 			$sms->to = $to;
 			$sms->message = $message;
 

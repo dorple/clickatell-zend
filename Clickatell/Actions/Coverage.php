@@ -18,7 +18,8 @@ class Coverage extends Action {
 		//set extra
 		$extra['msisdn'] = $number;
 
-		$uriRequest = new Clicaktell_Request('utils/routeCoverage', $this->credentials, $extra);
+		$uriRequest = new Clicaktell_Request('utils/routeCoverage', array_merge($this->credentials, $extra));
+		
 		return $this->handleResponse($uriRequest);
 		
 	}

@@ -29,9 +29,16 @@ class Clicaktell_Request extends Zend_Http_Client {
 	* @param array $credentials
 	* @param array $extra
 	*/
-	public function __construct($uri, $credentials, $extra = array()) {
+	public function __construct($uri, $packet) {
 
-		parent::__construct(self::URI_API.$uri.$this->genQueryString($credentials, $extra));
+		$uriConstruct = self::URI_API.$uri;
+
+		if ($packet) {
+			$uriConstruct .= $this->genQueryString($packet);
+		}
+
+		parent::__construct($uriConstruct);
+
 
 		$this->request();
 
@@ -57,23 +64,14 @@ class Clicaktell_Request extends Zend_Http_Client {
 	* @param array $extra
 	* @return string
 	*/
-	private function genQueryString($credentials, $extra) {
+	private function genQueryString($packet) {
 
 		$string = "?";
 
-		if (!empty($credentials['apiId']) && !empty($credentials['apiUser']) && !empty($credentials['apiPass'])) {
-			$string .= "api_id=".$credentials['apiId'];
-			$string .= "&user=".$credentials['apiUser'];
-			$string .= "&password=".$credentials['apiPass'];
-
-			if (!empty($extra)) {
-				foreach($extra as $k => $v) {
-					$string .= "&".$k."=".$v;
-				}
+		if (!empty($packet)) {
+			foreach($packet as $k => $v) {
+				$string .= "&".$k."=".$v;
 			}
-		}
-		else {
-			throw new RequestException(__CLASS__.': Invalid Credential Object Supplied');
 		}
 
 		return $string;

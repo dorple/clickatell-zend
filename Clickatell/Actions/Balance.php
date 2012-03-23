@@ -15,6 +15,7 @@ class Balance extends Action {
 	public function get() {
 
 		$uriRequest = new Clicaktell_Request('http/getbalance', $this->credentials);
+		
 		return $this->handleResponse($uriRequest);
 		
 	}
