@@ -4,7 +4,6 @@
 */
 require_once('Zend/Http/Client.php');
 
-
 /**
 * @see TransportException
 */
