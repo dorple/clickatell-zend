@@ -1,8 +1,9 @@
 <?php
+
 /**
-* @see Clickatell_Request
+* @see Sms
 */
-require_once('Zend/Clickatell/Request.php');
+require_once('Zend/Clickatell/Actions/Batch.php');
 
 /**
 * @see Sms
@@ -78,6 +79,25 @@ class Clickatell {
 		else {
 			return 'sorry, you dont have any credits left';
 		}
+	}
+
+	/**
+	* @param string template
+	* @param array values
+	* @param boolean simulate
+	*/
+	public function sendBatch($template, $values, $to, $sim = false) {
+
+		$batch = new Batch($this->credentials);
+		$batch->to = $to;
+
+		if ($sim) {
+			return $batch->simBatch($template, $values);
+		}
+		else {
+			return $batch->runBatch($template, $values);
+		}
+
 	}
 
 	/**

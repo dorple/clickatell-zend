@@ -1,8 +1,8 @@
 <?php
 /**
-* @see Clickatell_Request
+* @see Zend_Http_Client
 */
-require_once('Zend/Clickatell/Request.php');
+require_once('Zend/Http/Client.php');
 
 
 /**
@@ -15,6 +15,13 @@ require_once('Zend/Clickatell/Exception/TransportException.php');
 * @package Clickatell
 */
 class Action {
+
+	/**
+	* API location
+	* @const string
+	*/
+	const URI_API = 'http://api.clickatell.com/';
+
 
 	/**
 	* Initialize Credentials Object
@@ -58,8 +65,9 @@ class Action {
 
 		$uri = $call_namespace;
 		$data = $this->genQueryString($packet);		
-
-		$uriRequest = new Clickatell_Request($uri, $data);				
+		
+		$uriRequest = new Zend_Http_Client(self::URI_API.$uri.$data);		
+		$uriRequest = $uriRequest->request();		
 
 		return $this->handleResponse($uriRequest);
 	}
